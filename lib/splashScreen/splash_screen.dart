@@ -2,6 +2,8 @@ import 'dart:async';
 
 // import 'package:cab_booking/authetication/car_info_screen.dart';
 import 'package:cab_booking/authetication/login_screen.dart';
+import 'package:cab_booking/global/global.dart';
+import 'package:cab_booking/mainScreens/main_screen.dart';
 
 // import 'package:cab_booking/authetication/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +18,14 @@ class MySplashScreen extends StatefulWidget {
 class _MySplashScreenState extends State<MySplashScreen> {
   startTimer() {
     Timer(const Duration(seconds: 3), () async {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (c) => const LoginScreen()));
+      if (await fAuth.currentUser != null) {
+        currentFirebaseUser = fAuth.currentUser;
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => const MainScreen()));
+      } else {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => const LoginScreen()));
+      }
     });
   }
 
