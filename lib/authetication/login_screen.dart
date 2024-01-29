@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     backgroundColor: Colors.lightGreenAccent),
                 child: const Text(
                   "Login",
-                  style: TextStyle(color: Colors.black54, fontSize: 18),
+                  style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
               TextButton(

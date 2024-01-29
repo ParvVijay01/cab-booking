@@ -1,10 +1,15 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 
+import 'package:cab_booking/firebase_options.dart';
 import 'package:cab_booking/splashScreen/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp(
       child: MaterialApp(
     title: 'Drivers App',

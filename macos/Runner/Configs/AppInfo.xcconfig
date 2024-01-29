@@ -8,7 +8,7 @@
 PRODUCT_NAME = cab_booking
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.cabBooking
+PRODUCT_BUNDLE_IDENTIFIER = com.parv.cabBooking
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2024 com.example. All rights reserved.

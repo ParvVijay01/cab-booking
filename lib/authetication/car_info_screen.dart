@@ -1,4 +1,8 @@
+import 'package:cab_booking/global/global.dart';
+import 'package:cab_booking/splashScreen/splash_screen.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CarInfoScreen extends StatefulWidget {
   const CarInfoScreen({super.key});
@@ -14,6 +18,28 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
   TextEditingController carColorEditingController = TextEditingController();
   List<String> carTypeList = ["uber-x", "uber-go", "bike"];
   String? selectedCarType;
+
+  saveCarInfo() {
+    Map driverCarInfoMap = {
+      "car_color": carColorEditingController.text.trim(),
+      "car_number": carNumberTextEditingController.text.trim(),
+      "car_model": carModelTextEditingController.text.trim(),
+      "type": selectedCarType
+    };
+
+    DatabaseReference driverRef =
+        FirebaseDatabase.instance.ref().child("drivers");
+    driverRef
+        .child(currentFirebaseUser!.uid)
+        .child("car_details")
+        .set(driverCarInfoMap);
+
+    Fluttertoast.showToast(msg: "Car details has been saved successfully");
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (c) => const MySplashScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,12 +106,10 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
               ),
               TextField(
                 controller: carColorEditingController,
-                keyboardType: TextInputType.text,
-                obscureText: true,
                 style: const TextStyle(color: Colors.grey),
                 decoration: const InputDecoration(
-                  labelText: "Car Number",
-                  hintText: "Car Number",
+                  labelText: "Car Color",
+                  hintText: "Car Color",
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey),
                   ),
@@ -135,12 +159,12 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (c) => const CarInfoScreen(),
-                    ),
-                  );
+                  if (carColorEditingController.text.isNotEmpty &&
+                      carNumberTextEditingController.text.isNotEmpty &&
+                      carModelTextEditingController.text.isNotEmpty &&
+                      selectedCarType != null) {
+                    saveCarInfo();
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightGreenAccent),
