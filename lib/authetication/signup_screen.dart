@@ -2,6 +2,7 @@
 // ignore_for_file: use_build_context_synchronously, body_might_complete_normally_catch_error
 
 import 'package:cab_booking/authetication/car_info_screen.dart';
+import 'package:cab_booking/authetication/login_screen.dart';
 import 'package:cab_booking/global/global.dart';
 import 'package:cab_booking/widgets/progress_dialogue.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -217,7 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SignUpScreen(),
+                      builder: (context) => const LoginScreen(),
                     ),
                   );
                 },
