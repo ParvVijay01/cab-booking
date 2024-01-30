@@ -54,12 +54,26 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     if (firebaseUser != null) {
-      currentFirebaseUser = firebaseUser;
-      Fluttertoast.showToast(msg: "Login successfully.");
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (c) => const MySplashScreen()),
-      );
+      DatabaseReference driverRef =
+          FirebaseDatabase.instance.ref().child("drivers");
+      driverRef.child(firebaseUser.uid).once().then((driverKey) {
+        final snap = driverKey.snapshot;
+        if (snap.value != null) {
+          currentFirebaseUser = firebaseUser;
+          Fluttertoast.showToast(msg: "Login successfully.");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (c) => const MySplashScreen()),
+          );
+        } else {
+          Fluttertoast.showToast(msg: "No record exist with this Email.");
+          fAuth.signOut();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (c) => const MySplashScreen()),
+          );
+        }
+      });
     } else {
       Navigator.pop(context);
       Fluttertoast.showToast(msg: "Invalid Credentials");
